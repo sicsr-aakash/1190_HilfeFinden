@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.hilfe"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <!-- Allow to connect with internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <application
+        android:icon="@drawable/logo"
+        android:label="@string/app_name" >
+        <activity
+            android:name="com.example.hilfe.DashboardActivity"
+            android:label="Hilfe finden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Login Activity -->
+        <activity
+            android:name="com.example.hilfe.LoginActivity"
+            android:label="Login Account" >
+        </activity>
+
+        <!-- Register Activity -->
+        <activity
+            android:name="com.example.hilfe.RegisterActivity"
+            android:label="Register New Account" >
+        </activity>
+        <activity
+            android:name="com.example.hilfe.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="com.example.hilfe.SelectInterestActivity"
+            android:label="Select Interest" >
+        </activity>
+        <activity
+            android:name="com.example.hilfe.InterestSelectActivity"
+            android:label="@string/title_activity_interest_select" >
+        </activity>
+        <activity
+            android:name="com.example.hilfe.Header"
+            android:label="@string/title_activity_header" >
+        </activity>
+        <activity
+            android:name="com.example.hilfe.SearchedResultActivity"
+            android:label="@string/title_activity_searched_result" >
+        </activity>
+        <activity android:name="com.example.hilfe.MyExpandableListAdapter" >
+        </activity>
+        <activity
+            android:name="com.example.hilfe.MyCustomListView"
+            android:label="List of Skillful people" >
+        </activity>
+    </application>
+
+</manifest>

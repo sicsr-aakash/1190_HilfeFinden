@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, AndroidDashboard!</string>
+    <string name="app_name">Hilfe finden</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_interest_select">InterestSelectActivity</string>
+    <string name="title_activity_header">Header</string>
+    <string name="title_activity_searched_result">SearchedResultActivity</string>
+    <string name="title_activity_my_expandable_list_adapter">MyExpandableListAdapter</string>
+    <string name="title_activity_my_custom_list_view">MyCustomListView</string>
+
+</resources>

@@ -1,0 +1,152 @@
+<?php
+
+class DB_Functions {
+
+    private $db;
+
+    function __construct() {
+        require_once 'DB_Connect.php';
+        $this->db = new DB_Connect();
+        $this->db->connect();
+    }
+
+    function __destruct() {
+        
+    }
+
+    public function storeUser($name, $email, $password,$mobile,$lat,$long) {
+        $uuid = uniqid('', true);
+        $hash = $this->hashSSHA($password);
+        $encrypted_password = $hash["encrypted"]; 
+        $salt = $hash["salt"]; 
+        $result = mysql_query("INSERT INTO users(unique_id, name, email, encrypted_password, salt, mobile, latitude, longitude, created_at) VALUES('$uuid', '$name', '$email', '$encrypted_password', '$salt', '$mobile', '$lat', '$long', NOW())");
+        if ($result) {
+            $uid = mysql_insert_id(); 
+            $result = mysql_query("SELECT * FROM users WHERE uid = $uid");
+
+            return mysql_fetch_array($result);
+        } else {
+            return false;
+        }
+    }
+
+
+    public function storeInterest($interestemail,$interest) {
+	$array=explode(',',$interest);
+	for($i=0;$i<sizeof($array)-1;$i++)
+{
+        $result = mysql_query("INSERT INTO user_interest(email, name) VALUES('$interestemail', '$array[$i]')");
+}
+        if ($result) {
+            $uid = mysql_insert_id();
+            $result = mysql_query("SELECT * FROM user_interest WHERE user_interest_id = $uid");
+            return mysql_fetch_array($result);
+        } else {
+            return false;
+        }
+    }
+
+
+public function searchInterest($email,$selectedFromList) {
+	$emails="kk";
+$interest="PHP";
+$latitude_user="";
+$longitude_user="";
+
+function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+  $theta = $lon1 - $lon2;
+  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+  $dist = acos($dist);
+  $dist = rad2deg($dist);
+  $miles = $dist * 60 * 1.1515;
+  $unit = strtoupper($unit);
+
+  if ($unit == "K") {
+    return ($miles * 1.609344);
+  } else if ($unit == "N") {
+      return ($miles * 0.8684);
+    } else {
+        return $miles;
+      }
+}
+
+
+
+$sql1="SELECT latitude,longitude from users where email like '$emails'";
+
+$retval = mysql_query( $sql1, $conn );
+if(! $retval )
+{
+  die('Could not get data: ' . mysql_error());
+}
+while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+{
+	$latitude_user=$row['latitude'];
+	$longitude_user=$row['longitude'];
+} 
+
+
+$sql = "SELECT name,email,mobile,latitude,longitude from users where email in (SELECT distinct email FROM user_interest where name like '$interest' and email not like '$emails')";
+
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not get data: ' . mysql_error());
+}
+while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+{
+	$row['distance']=number_format(distance($latitude_user, $longitude_user, $row['latitude'], $row['longitude'], "K"),2,'.','');
+	 
+	$output[]=$row;	
+}
+ 
+ return $output;
+    }
+
+
+    public function getUserByEmailAndPassword($email, $password) {
+        $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            $result = mysql_fetch_array($result);
+            $salt = $result['salt'];
+            $encrypted_password = $result['encrypted_password'];
+            $hash = $this->checkhashSSHA($salt, $password);
+            if ($encrypted_password == $hash) {
+                return $result;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function isUserExisted($email) {
+        $result = mysql_query("SELECT email from users WHERE email = '$email'");
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function hashSSHA($password) {
+
+        $salt = sha1(rand());
+        $salt = substr($salt, 0, 10);
+        $encrypted = base64_encode(sha1($password . $salt, true) . $salt);
+        $hash = array("salt" => $salt, "encrypted" => $encrypted);
+        return $hash;
+    }
+
+    public function checkhashSSHA($salt, $password) {
+
+        $hash = base64_encode(sha1($password . $salt, true) . $salt);
+
+        return $hash;
+    }
+
+}
+
+?>

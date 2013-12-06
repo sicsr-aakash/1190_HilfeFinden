@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#3b3b3b">
+    
+    
+    
+    <include layout="@layout/activity_header"
+        android:id="@+id/logout"
+        android:layout_below="@+id/inputSearch" />"
+        
+       
+    
+     <EditText android:id="@+id/inputSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Search for skillful people: "
+        android:inputType="textVisiblePassword"
+        android:layout_below="@layout/activity_header"/>
+    
+       <ListView
+           android:id="@+android:id/list"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/inputSearch"
+           android:choiceMode="multipleChoice" />
+
+   <!-- 
+       <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dip"
+        android:background="@null"
+        android:text="Logout"
+        android:textColor="#21dbd4"
+        android:textSize="20dip"
+        android:textStyle="bold" 
+        />
+        
+        -->
+
+      
+
+</RelativeLayout>

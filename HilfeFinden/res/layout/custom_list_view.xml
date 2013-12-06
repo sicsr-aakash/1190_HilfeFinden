@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyCustomListView" >
+
+    <include layout="@layout/activity_header"/>
+    
+  <ListView android:id="@id/android:list"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:layout_weight="2"
+android:drawSelectorOnTop="false" >
+
+</ListView>
+
+<TextView android:id="@id/android:empty"
+android:layout_width="fill_parent" 
+android:layout_height="fill_parent" 
+android:text="No data"
+android:layout_below="@layout/activity_header"
+/>
+</RelativeLayout>
